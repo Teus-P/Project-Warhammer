@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Potyczki</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+    <h3>Potyczka</h3>
+    <h3 th:text="${session.fight.fightName}"></h3>
+    <hr>
+
+    <div id="main-table">
+
+<!--        <a th:href="@{/fight/initiativeRoll}"-->
+<!--           class="btn btn-primary btn-sm mb-3">-->
+<!--            Rzut na Inicjatywę-->
+<!--        </a>-->
+
+        <button id="initiativeRollButton">Rzut na Inicjatywę</button>
+
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Nazwa Postaci</th>
+                <th>Żywotność</th>
+                <th>Inicjatywa</th>
+                <!--            <th>Akcje</th>-->
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="tempAdversary : ${adversariesList.adversaries}">
+                <td th:text="${tempAdversary.name}"/>
+
+                <td th:text="${tempAdversary.characteristics.wounds}">
+
+                <td th:text="${tempAdversary.initiative}"/>
+
+                <!--            <td>-->
+                <!--                <a th:href="@{/fight/showFormForUpdate(fightId=${tempFight.id})}"-->
+                <!--                   class="btn btn-info btn-sm">-->
+                <!--                    Update-->
+                <!--                </a>-->
+                <!--            </td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="initiative-table" style="display: none">
+
+        <form th:action="@{/fight/initiativeRoll}" th:object="${adversariesList}" method="POST">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Nazwa Postaci</th>
+                    <th>Inicjatywa</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="tempAdversary,i : *{adversaries}">
+
+                    <input type="hidden" th:field="*{adversaries[__${i.index}__].id}"/>
+                    <input type="hidden" th:field="*{adversaries[__${i.index}__].name}"/>
+                    <input type="hidden" th:field="*{adversaries[__${i.index}__].characteristics}"/>
+
+                    <td th:text="${tempAdversary.name}"/>
+
+                    <td>
+                        <input type="text" th:field="*{adversaries[__${i.index}__].initiative}"
+                               class="form-control mb-4 col-4" placeholder="Rzut na inicjatywę">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-info col-2">Licz inicjatywę</button>
+
+        </form>
+    </div>
+
+</div>
+
+<script>
+    const mainTable = document.getElementById("main-table");
+    const initiativeTable = document.getElementById("initiative-table");
+    const initiativeRollButton = document.getElementById("initiativeRollButton");
+
+    initiativeRollButton.onclick = function () {
+        mainTable.style.display = "none";
+        initiativeTable.style.display = "block";
+    }
+
+</script>
+
+</body>
+
+</html>

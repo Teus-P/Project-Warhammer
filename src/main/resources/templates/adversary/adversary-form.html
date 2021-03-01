@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Save Adversary</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container">
+    <h3>Zarządzanie Postaciami</h3>
+    <hr>
+
+    <p class="h4 mb-4">Zapisz Postać</p>
+
+    <form action="#" th:action="@{/adversary/save}"
+          th:object="${adversary}" method="POST">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <label for="name">Nazwa</label>
+        <input type="text" th:field="*{name}" id="name"
+               class="form-control mb-4 col-4" placeholder="Nazwa">
+
+        <hr>
+
+        <label for="weaponSkill">Walka Wręcz</label>
+        <input type="text" th:field="*{characteristics.weaponSkill}" id="weaponSkill"
+               class="form-control mb-4 col-4">
+
+        <label for="ballisticSkill">Umiejętności Strzeleckie</label>
+        <input type="text" th:field="*{characteristics.ballisticSkill}" id="ballisticSkill"
+               class="form-control mb-4 col-4">
+
+        <label for="strength">Siła</label>
+        <input type="text" th:field="*{characteristics.strength}" id="strength"
+               class="form-control mb-4 col-4">
+
+        <label for="toughness">Wytrzymałość</label>
+        <input type="text" th:field="*{characteristics.toughness}" id="toughness"
+               class="form-control mb-4 col-4">
+
+        <label for="initiative">Inicjatywa</label>
+        <input type="text" th:field="*{characteristics.initiative}" id="initiative"
+               class="form-control mb-4 col-4">
+
+        <label for="agility">Zwinność</label>
+        <input type="text" th:field="*{characteristics.agility}" id="agility"
+               class="form-control mb-4 col-4">
+
+        <label for="dexterity">Zręczność</label>
+        <input type="text" th:field="*{characteristics.dexterity}" id="dexterity"
+               class="form-control mb-4 col-4">
+
+        <label for="intelligence">Inteligencja</label>
+        <input type="text" th:field="*{characteristics.intelligence}" id="intelligence"
+               class="form-control mb-4 col-4">
+
+        <label for="willpower">Siła Woli</label>
+        <input type="text" th:field="*{characteristics.willpower}" id="willpower"
+               class="form-control mb-4 col-4">
+
+        <label for="fellowship">Ogłada</label>
+        <input type="text" th:field="*{characteristics.fellowship}" id="fellowship"
+               class="form-control mb-4 col-4">
+
+        <label for="wounds">Żywotność</label>
+        <input type="text" th:field="*{characteristics.wounds}" id="wounds"
+               class="form-control mb-4 col-4">
+
+        <label for="movement">Szybkość</label>
+        <input type="text" th:field="*{characteristics.movement}" id="movement"
+               class="form-control mb-4 col-4">
+
+        <button type="submit" class="btn btn-info col-2">Zapisz</button>
+    </form>
+
+    <hr>
+    <a th:href="@{/adversary/list}">Powrót do listy postaci</a>
+</div>
+
+</body>
+
+</html>

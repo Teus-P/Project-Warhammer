@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Dodaj Potyczkę</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <h3>Zarządzanie Potyczkami</h3>
+    <hr>
+
+    <p class="h4 mb-4">Zapisz Potyczkę</p>
+
+    <form action="#" th:action="@{/fight/save}"
+          th:object="${fightForm}" method="POST">
+
+        <input type="hidden" th:field="*{id}"/>
+
+        <label for="fightName">Nazwa Potyczki</label>
+        <input type="text" th:field="*{fightName}" id="fightName"
+               class="form-control mb-4 col-4" placeholder="Nazwa Potyczki">
+
+        <table class="table table-bordered" id="dynamic_field">
+            <tr>
+                <td>
+                    <select th:field="*{adversariesId}">
+                        <option th:each="adversary : ${session.adversaries}" th:value="${adversary.id}"
+                                th:text="${adversary.name}"></option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" name="add" id="add" class="btn btn-success">Add More</button>
+                </td>
+            </tr>
+        </table>
+
+        <button type="submit" class="btn btn-info col-2">Zapisz</button>
+    </form>
+
+    <hr>
+    <a th:href="@{/adversary/list}">Powrót do listy postaci</a>
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var adversaries = [[${session.adversaries}]];
+
+        $('#add').click(function () {
+            let i;
+
+            const select = document.createElement("select");
+            select.id = "adversariesId";
+            select.name = "adversariesId";
+
+            for (i = 0; i < adversaries.length; i++) {
+                const option = document.createElement("option");
+                option.textContent = adversaries[i].name;
+                option.value = adversaries[i].id;
+                select.appendChild(option);
+            }
+
+            i = 0;
+            $('#dynamic_field').append('<tr id="row' + i + '"><td>'
+                + select.outerHTML +
+                '</td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+        });
+
+        $(document).on('click', '.btn_remove', function () {
+            var button_id = $(this).attr("id");
+            $('#row' + button_id + '').remove();
+        });
+    });
+</script>
+
+</body>
+
+</html>
+
+
+
