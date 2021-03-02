@@ -39,7 +39,7 @@
             </thead>
 
             <tbody>
-            <tr th:each="tempAdversary : ${adversariesList.adversaries}">
+            <tr th:each="tempAdversary : ${session.adversariesList.adversaries}">
                 <td th:text="${tempAdversary.name}"/>
 
                 <td th:text="${tempAdversary.characteristics.wounds}">

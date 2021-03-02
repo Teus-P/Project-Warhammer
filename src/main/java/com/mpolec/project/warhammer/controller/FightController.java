@@ -102,25 +102,29 @@ public class FightController {
         }
 
         model.addAttribute("adversariesList", adversariesList);
+        session.setAttribute("adversariesList", adversariesList);
 
         return "fight/start-fight";
     }
 
     @GetMapping("/updateFight")
-    public String updateFight(@ModelAttribute("adversariesList") AdversariesList adversaries){
+    public String updateFight(HttpSession session, Model model){
+
+        AdversariesList adversariesList = (AdversariesList) session.getAttribute("adversariesList");
+        model.addAttribute("adversariesList", adversariesList);
 
         return "fight/start-fight";
     }
 
     @PostMapping("/initiativeRoll")
-    public String initiativeRoll(@ModelAttribute("adversariesList") AdversariesList adversaries, RedirectAttributes redirectAttributes){
+    public String initiativeRoll(@ModelAttribute("adversariesList") AdversariesList adversaries, HttpSession session){
 
         for (AdversaryModel adversary : adversaries.getAdversaries()) {
             adversary.setInitiative(adversary.getInitiative() + adversary.getCharacteristics().getInitiative());
         }
 
         adversaries.getAdversaries().sort(new InitiativeSorter());
-        redirectAttributes.addFlashAttribute("adversariesList", adversaries);
+        session.setAttribute("adversariesList", adversaries);
 
         return "redirect:/fight/updateFight";
     }
