@@ -2,18 +2,15 @@ package com.mpolec.project.warhammer.controller;
 
 import com.mpolec.project.warhammer.entity.AdversaryEntity;
 import com.mpolec.project.warhammer.entity.FightEntity;
-import com.mpolec.project.warhammer.model.AdversaryModel;
 import com.mpolec.project.warhammer.model.AdversariesList;
+import com.mpolec.project.warhammer.model.AdversaryModel;
 import com.mpolec.project.warhammer.model.FightForm;
 import com.mpolec.project.warhammer.service.AdversaryService;
 import com.mpolec.project.warhammer.service.FightService;
-import com.mpolec.project.warhammer.utils.InitiativeSorter;
+import com.mpolec.project.warhammer.utils.FightUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -119,11 +116,7 @@ public class FightController {
     @PostMapping("/initiativeRoll")
     public String initiativeRoll(@ModelAttribute("adversariesList") AdversariesList adversaries, HttpSession session){
 
-        for (AdversaryModel adversary : adversaries.getAdversaries()) {
-            adversary.setInitiative(adversary.getInitiative() + adversary.getCharacteristics().getInitiative());
-        }
-
-        adversaries.getAdversaries().sort(new InitiativeSorter());
+        FightUtils.calculateInitiative(adversaries);
         session.setAttribute("adversariesList", adversaries);
 
         return "redirect:/fight/updateFight";

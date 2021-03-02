@@ -1,8 +1,6 @@
 package com.mpolec.project.warhammer.service.impl;
 
-import com.mpolec.project.warhammer.dao.AdversaryRepository;
 import com.mpolec.project.warhammer.dao.FightRepository;
-import com.mpolec.project.warhammer.entity.AdversaryEntity;
 import com.mpolec.project.warhammer.entity.FightEntity;
 import com.mpolec.project.warhammer.service.FightService;
 import org.springframework.beans.factory.annotation.Autowired;

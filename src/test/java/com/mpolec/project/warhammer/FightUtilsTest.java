@@ -1,5 +1,6 @@
 package com.mpolec.project.warhammer;
 
+import com.mpolec.project.warhammer.utils.FightUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,13 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class FightControllerTest {
+class FightUtilsTest {
 
-    private FightController fightController;
+    private FightUtils fightController;
 
     @BeforeEach
     void init(){
-        fightController = new FightController();
+        fightController = new FightUtils();
     }
 
     @Test
