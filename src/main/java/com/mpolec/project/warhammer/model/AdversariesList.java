@@ -16,4 +16,12 @@ public class AdversariesList {
     public void addAdversary(AdversaryModel adversary) {
         this.adversaries.add(adversary);
     }
+
+    public AdversaryModel getAdversaryById(Integer id){
+        return adversaries.stream().filter(adversary -> id.equals(adversary.getId())).findFirst().orElse(null);
+    }
+
+    public void updateAdversaryInAdversariesList(AdversaryModel adversaryModel) {
+        getAdversaryById(adversaryModel.getId()).getCharacteristics().setWounds(adversaryModel.getCharacteristics().getWounds());
+    }
 }

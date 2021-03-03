@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Potyczki</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+    <h3>Potyczka</h3>
+    <h3 th:text="${session.fight.fightName}"></h3>
+    <hr>
+
+    <h3 th:text="'Atakujący: ' + ${attackModel.attackerName}"></h3>
+    <hr>
+
+    <div id="attack-table">
+
+        <form th:action="@{/fight/attack}" th:object="${attackModel}" method="POST">
+
+            <input type="hidden" th:field="*{attackerId}"/>
+
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Nazwa Postaci</th>
+                    <th>Rzut atakującego</th>
+                    <th>Rzut atakowanego</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>
+                        <select th:field="*{defenderId}">
+                            <option th:each="adversary : ${session.adversariesList.adversaries}" th:value="${adversary.id}"
+                                    th:text="${adversary.name}"></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" th:field="*{attackerRoll}" id="attackerRoll"
+                               class="form-control mb-4 col-4" placeholder="Rzut atakującego">
+                    </td>
+                    <td>
+                        <input type="number" th:field="*{defenderRoll}" id="defenderRoll"
+                               class="form-control mb-4 col-4" placeholder="Rzut atakowanego">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-info col-2">Atakuj</button>
+
+        </form>
+    </div>
+
+</div>
+
+</body>
+
+</html>

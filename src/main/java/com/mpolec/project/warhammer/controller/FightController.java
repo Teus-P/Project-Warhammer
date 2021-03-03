@@ -5,9 +5,9 @@ import com.mpolec.project.warhammer.entity.FightEntity;
 import com.mpolec.project.warhammer.model.AdversariesList;
 import com.mpolec.project.warhammer.model.AdversaryModel;
 import com.mpolec.project.warhammer.model.FightForm;
+import com.mpolec.project.warhammer.model.AttackModel;
 import com.mpolec.project.warhammer.service.AdversaryService;
 import com.mpolec.project.warhammer.service.FightService;
-import com.mpolec.project.warhammer.utils.FightUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.mpolec.project.warhammer.utils.FightUtils.*;
 
 @Controller
 @RequestMapping("/fight")
@@ -89,19 +91,24 @@ public class FightController {
         ArrayList<AdversaryEntity> adversariesEntity = new ArrayList<>(fight.getAdversaries());
         AdversariesList adversariesList = new AdversariesList();
 
+        int i = 0;
         for (AdversaryEntity adversaryEntity : adversariesEntity) {
             AdversaryModel adversary = new AdversaryModel();
-            adversary.setId(adversary.getId());
+            adversary.setId(i);
             adversary.setName(adversaryEntity.getName());
             adversary.setCharacteristics(adversaryEntity.getCharacteristics());
             adversary.setInitiative(0);
             adversariesList.addAdversary(adversary);
+            i++;
         }
 
+        AttackModel targetAdversary = new AttackModel();
+
+        model.addAttribute("targetAdversary", targetAdversary);
         model.addAttribute("adversariesList", adversariesList);
         session.setAttribute("adversariesList", adversariesList);
 
-        return "fight/start-fight";
+        return "fight/fight-panel";
     }
 
     @GetMapping("/updateFight")
@@ -110,15 +117,35 @@ public class FightController {
         AdversariesList adversariesList = (AdversariesList) session.getAttribute("adversariesList");
         model.addAttribute("adversariesList", adversariesList);
 
-        return "fight/start-fight";
+        return "fight/fight-panel";
     }
 
     @PostMapping("/initiativeRoll")
     public String initiativeRoll(@ModelAttribute("adversariesList") AdversariesList adversaries, HttpSession session){
 
-        FightUtils.calculateInitiative(adversaries);
+        calculateInitiative(adversaries);
         session.setAttribute("adversariesList", adversaries);
 
         return "redirect:/fight/updateFight";
+    }
+
+    @GetMapping("/showFormForAttack")
+    public String showFormForAttack(@RequestParam("attackerId") int id, Model model, HttpSession session){
+
+        AdversariesList adversariesList = (AdversariesList) session.getAttribute("adversariesList");
+        AttackModel attackModel = AttackModel.prepareAttackModel(id, adversariesList);
+        model.addAttribute("attackModel", attackModel);
+
+        return "fight/attack-form";
+    }
+
+    @PostMapping("/attack")
+    public String attack(@ModelAttribute("attackModel") AttackModel attackModel, HttpSession session, Model model){
+
+        AdversariesList adversariesList = (AdversariesList) session.getAttribute("adversariesList");
+        attackModel.updateAttackModel(adversariesList);
+        model.addAttribute("attackModel", attackModel);
+
+        return "fight/attack-result";
     }
 }

@@ -1,28 +1,21 @@
 package com.mpolec.project.warhammer;
 
-import com.mpolec.project.warhammer.utils.FightUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.mpolec.project.warhammer.utils.FightUtils.calculateSuccessLevel;
+import static com.mpolec.project.warhammer.utils.FightUtils.compareAttackerAndDefenderSuccessLevels;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class FightUtilsTest {
-
-    private FightUtils fightController;
-
-    @BeforeEach
-    void init(){
-        fightController = new FightUtils();
-    }
 
     @Test
     void shouldReturnTrueForCalculationOfSuccessLevelFromSuccessRoll(){
         int skillRoll = 15;
         int skill = 40;
 
-        int result = fightController.calculateSuccessLevel(skillRoll, skill);
+        int result = calculateSuccessLevel(skillRoll, skill);
 
         assertEquals(3, result);
     }
@@ -32,7 +25,7 @@ class FightUtilsTest {
         int skillRoll = 89;
         int skill = 40;
 
-        int result = fightController.calculateSuccessLevel(skillRoll, skill);
+        int result = calculateSuccessLevel(skillRoll, skill);
 
         assertEquals(-4, result);
     }
@@ -42,7 +35,7 @@ class FightUtilsTest {
         int attackerSuccessLevel = 4;
         int defenderSuccessLevel = 2;
 
-        int result = fightController.compareAttackerAndDefenderSuccessLevels(attackerSuccessLevel, defenderSuccessLevel);
+        int result = compareAttackerAndDefenderSuccessLevels(attackerSuccessLevel, defenderSuccessLevel);
 
         assertEquals(2, result);
     }
@@ -52,7 +45,7 @@ class FightUtilsTest {
         int attackerSuccessLevel = 2;
         int defenderSuccessLevel = 4;
 
-        int result = fightController.compareAttackerAndDefenderSuccessLevels(attackerSuccessLevel, defenderSuccessLevel);
+        int result = compareAttackerAndDefenderSuccessLevels(attackerSuccessLevel, defenderSuccessLevel);
 
         assertEquals(-2, result);
     }

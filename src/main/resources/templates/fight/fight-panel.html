@@ -4,11 +4,9 @@
 <head>
     <title>Potyczki</title>
 
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
@@ -21,11 +19,6 @@
 
     <div id="main-table">
 
-<!--        <a th:href="@{/fight/initiativeRoll}"-->
-<!--           class="btn btn-primary btn-sm mb-3">-->
-<!--            Rzut na Inicjatywę-->
-<!--        </a>-->
-
         <button id="initiativeRollButton">Rzut na Inicjatywę</button>
 
         <table class="table table-bordered table-striped">
@@ -34,7 +27,7 @@
                 <th>Nazwa Postaci</th>
                 <th>Żywotność</th>
                 <th>Inicjatywa</th>
-                <!--            <th>Akcje</th>-->
+                <th>Akcje</th>
             </tr>
             </thead>
 
@@ -46,12 +39,13 @@
 
                 <td th:text="${tempAdversary.initiative}"/>
 
-                <!--            <td>-->
-                <!--                <a th:href="@{/fight/showFormForUpdate(fightId=${tempFight.id})}"-->
-                <!--                   class="btn btn-info btn-sm">-->
-                <!--                    Update-->
-                <!--                </a>-->
-                <!--            </td>-->
+                <td>
+<!--                    <button id="attackButton">Atakuj</button>-->
+                    <a th:href="@{/fight/showFormForAttack(attackerId=${tempAdversary.id})}"
+                       class="btn btn-info btn-sm">
+                        Atakuj
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>

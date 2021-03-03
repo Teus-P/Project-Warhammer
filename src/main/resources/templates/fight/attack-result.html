@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Potyczki</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container">
+    <h3>Potyczka</h3>
+    <h3 th:text="${session.fight.fightName}"></h3>
+    <hr>
+
+    <div id="attack-result-table">
+
+        <p th:text="'Atakujący: ' + ${attackModel.attackerName}"></p>
+        <p th:text="'Atakowany: ' + ${attackModel.defenderName}"></p>
+
+        <p th:text="'Wynik: ' + ${attackModel.result}"></p>
+        <p th:if="${attackModel.damage > 0}" th:text="'Obrażenia: ' + ${attackModel.damage}"></p>
+        <p th:if="${attackModel.damage > 0}" th:text="'Przeliczone obrażenia: ' + ${attackModel.calculatedDamage}"></p>
+
+        <hr>
+
+        <a th:href="@{/fight/updateFight}"
+           class="btn btn-info btn-sm">
+            Dalej
+        </a>
+    </div>
+
+</div>
+
+</body>
+
+</html>
