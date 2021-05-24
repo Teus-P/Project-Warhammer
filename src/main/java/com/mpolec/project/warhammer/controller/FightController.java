@@ -3,9 +3,8 @@ package com.mpolec.project.warhammer.controller;
 import com.mpolec.project.warhammer.entity.AdversaryEntity;
 import com.mpolec.project.warhammer.entity.FightEntity;
 import com.mpolec.project.warhammer.model.AdversariesList;
-import com.mpolec.project.warhammer.model.AdversaryModel;
-import com.mpolec.project.warhammer.model.FightForm;
 import com.mpolec.project.warhammer.model.AttackModel;
+import com.mpolec.project.warhammer.model.FightForm;
 import com.mpolec.project.warhammer.service.AdversaryService;
 import com.mpolec.project.warhammer.service.FightService;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mpolec.project.warhammer.utils.FightUtils.*;
+import static com.mpolec.project.warhammer.utils.FightUtils.calculateInitiative;
 
 @Controller
 @RequestMapping("/fight")
@@ -86,26 +85,12 @@ public class FightController {
     public String startFight(@RequestParam("fightId") int id, HttpSession session, Model model) {
 
         FightEntity fight = fightService.findById(id);
-        session.setAttribute("fight", fight);
-
-        ArrayList<AdversaryEntity> adversariesEntity = new ArrayList<>(fight.getAdversaries());
-        AdversariesList adversariesList = new AdversariesList();
-
-        int i = 0;
-        for (AdversaryEntity adversaryEntity : adversariesEntity) {
-            AdversaryModel adversary = new AdversaryModel();
-            adversary.setId(i);
-            adversary.setName(adversaryEntity.getName());
-            adversary.setCharacteristics(adversaryEntity.getCharacteristics());
-            adversary.setInitiative(0);
-            adversariesList.addAdversary(adversary);
-            i++;
-        }
-
+        AdversariesList adversariesList = AdversariesList.createAdversariesList(new ArrayList<>(fight.getAdversaries()));
         AttackModel targetAdversary = new AttackModel();
 
         model.addAttribute("targetAdversary", targetAdversary);
         model.addAttribute("adversariesList", adversariesList);
+        session.setAttribute("fight", fight);
         session.setAttribute("adversariesList", adversariesList);
 
         return "fight/fight-panel";

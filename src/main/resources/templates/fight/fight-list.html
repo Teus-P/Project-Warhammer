@@ -41,20 +41,15 @@
             <td th:text="${tempFight.fightName}"/>
 
             <td>
-                <a th:href="@{/fight/showFormForUpdate(fightId=${tempFight.id})}"
-                   class="btn btn-info btn-sm">
-                    Update
-                </a>
+<!--                <a th:href="@{/fight/showFormForUpdate(fightId=${tempFight.id})}"-->
+<!--                   class="btn btn-info btn-sm">-->
+<!--                    Edytuj-->
+<!--                </a>-->
 
                 <a th:href="@{/fight/startFight(fightId=${tempFight.id})}"
                    class="btn btn-info btn-sm">
-                    Start fight
+                    Rozpocznij walkę
                 </a>
-<!--                <a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"-->
-<!--                   class="btn btn-danger btn-sm"-->
-<!--                   onclick="if (!(confirm('Are you sure you want to delete this employee?'))) return false">-->
-<!--                    Delete-->
-<!--                </a>-->
             </td>
         </tr>
         </tbody>
